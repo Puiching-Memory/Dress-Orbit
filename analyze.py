@@ -23,15 +23,16 @@ def github_request(url: str, token: str) -> tuple[list | dict, str]:
         return json.loads(resp.read()), link_header
 
 
-def get_all_contributors(owner_repo: str, token: str) -> dict[str, int]:
-    """Return {login: commit_count} for all contributors of a repo."""
+def get_all_contributors(owner_repo: str, token: str) -> tuple[dict[str, int], int]:
+    """Return ({login: commit_count}, total_contributors_including_anonymous)."""
     owner, repo = owner_repo.split("/", 1)
     contributors: dict[str, int] = {}
+    total_contributors = 0
     page = 1
     while True:
         url = (
             f"https://api.github.com/repos/{owner}/{repo}"
-            f"/contributors?per_page=100&page={page}&anon=0"
+            f"/contributors?per_page=100&page={page}&anon=1"
         )
         try:
             data, _ = github_request(url, token)
@@ -41,11 +42,12 @@ def get_all_contributors(owner_repo: str, token: str) -> dict[str, int]:
         if not data:
             break
         for entry in data:
+            total_contributors += 1
             login = entry.get("login")
             if login:
                 contributors[login] = entry.get("contributions", 0)
         page += 1
-    return contributors
+    return contributors, total_contributors
 
 
 def get_repo_meta(owner_repo: str, token: str) -> dict:
@@ -67,14 +69,16 @@ def get_repo_meta(owner_repo: str, token: str) -> dict:
 def build_readme_section(
     left_repo: str,
     right_repo: str,
-    left_total: int,
-    right_total: int,
+    left_total_all: int,
+    right_total_all: int,
+    left_total_login: int,
+    right_total_login: int,
     shared: list[dict],
     updated_at: str,
 ) -> str:
     overlap = len(shared)
-    left_ratio = overlap / left_total * 100 if left_total else 0.0
-    right_ratio = overlap / right_total * 100 if right_total else 0.0
+    left_ratio = overlap / left_total_login * 100 if left_total_login else 0.0
+    right_ratio = overlap / right_total_login * 100 if right_total_login else 0.0
 
     left_name = left_repo.split("/")[1]
     right_name = right_repo.split("/")[1]
@@ -88,9 +92,12 @@ def build_readme_section(
         f" | [{right_repo}](https://github.com/{right_repo}) |"
     )
     lines.append("|:--|--:|--:|")
-    lines.append(f"| 贡献者总数 | {left_total} | {right_total} |")
+    lines.append(f"| 贡献者总数（含匿名） | {left_total_all} | {right_total_all} |")
+    lines.append(f"| 可匹配 GitHub 登录名贡献者数 | {left_total_login} | {right_total_login} |")
     lines.append(f"| 重叠贡献者数 | {overlap} | {overlap} |")
-    lines.append(f"| 占本仓库贡献者比例 | {left_ratio:.2f}% | {right_ratio:.2f}% |")
+    lines.append(
+        f"| 占可匹配登录名贡献者比例 | {left_ratio:.2f}% | {right_ratio:.2f}% |"
+    )
 
     if shared:
         lines.append("\n### 重叠贡献者明细\n")
@@ -173,12 +180,18 @@ def main() -> None:
         )
 
     print(f"Fetching contributors: {args.left_repo} …")
-    left_contributors = get_all_contributors(args.left_repo, args.token)
-    print(f"  {len(left_contributors)} contributors found")
+    left_contributors, left_total_all = get_all_contributors(args.left_repo, args.token)
+    print(
+        f"  {left_total_all} contributors found (including anonymous), "
+        f"{len(left_contributors)} with GitHub login"
+    )
 
     print(f"Fetching contributors: {args.right_repo} …")
-    right_contributors = get_all_contributors(args.right_repo, args.token)
-    print(f"  {len(right_contributors)} contributors found")
+    right_contributors, right_total_all = get_all_contributors(args.right_repo, args.token)
+    print(
+        f"  {right_total_all} contributors found (including anonymous), "
+        f"{len(right_contributors)} with GitHub login"
+    )
 
     shared_logins = set(left_contributors) & set(right_contributors)
     shared = sorted(
@@ -201,11 +214,13 @@ def main() -> None:
         "updated_at": updated_at,
         "left_repo": {
             "full_name": args.left_repo,
-            "contributors": len(left_contributors),
+            "contributors_total_including_anonymous": left_total_all,
+            "contributors_with_login": len(left_contributors),
         },
         "right_repo": {
             "full_name": args.right_repo,
-            "contributors": len(right_contributors),
+            "contributors_total_including_anonymous": right_total_all,
+            "contributors_with_login": len(right_contributors),
         },
         "overlap": {
             "shared_count": len(shared),
@@ -222,6 +237,8 @@ def main() -> None:
     section = build_readme_section(
         args.left_repo,
         args.right_repo,
+        left_total_all,
+        right_total_all,
         len(left_contributors),
         len(right_contributors),
         shared,
@@ -231,7 +248,8 @@ def main() -> None:
 
     print(
         f"\nDone — {len(shared)} shared contributor(s) out of "
-        f"{len(left_contributors)} / {len(right_contributors)}"
+        f"{len(left_contributors)} / {len(right_contributors)} "
+        f"(login-matchable contributors)"
     )
 
 
