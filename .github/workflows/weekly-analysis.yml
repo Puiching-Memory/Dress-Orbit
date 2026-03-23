@@ -1,4 +1,4 @@
-name: 贡献者重合度分析
+name: Dress Orbit 分析
 
 on:
   schedule:
@@ -7,13 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       left_repo:
-        description: '左侧仓库（owner/repo 格式）'
+        description: '中心仓库（owner/repo 格式）'
         required: false
         default: 'Cute-Dress/Dress'
-      right_repo:
-        description: '右侧仓库（owner/repo 格式）'
-        required: false
-        default: 'OI-wiki/OI-wiki'
 
 jobs:
   analyze:
@@ -25,24 +21,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
         with:
-          python-version: '3.12'
+          enable-cache: true
 
-      - name: Run contributor overlap analysis
+      - name: Sync dependencies
+        run: |
+          uv sync --python 3.12
+
+      - name: Run Dress orbit analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python analyze.py \
-            "${{ github.event.inputs.left_repo || 'Cute-Dress/Dress' }}" \
-            "${{ github.event.inputs.right_repo || 'OI-wiki/OI-wiki' }}"
+          uv run analyze.py \
+            --base-repo "${{ github.event.inputs.left_repo || 'Cute-Dress/Dress' }}"
 
       - name: Commit and push updates
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md contributor_overlap.json
+          git add README.md dress_orbit.json dress_orbit.svg
           git diff --staged --quiet \
-            || git commit -m "chore: update contributor overlap analysis [skip ci]"
+            || git commit -m "chore: update Dress orbit analysis [skip ci]"
           git push
