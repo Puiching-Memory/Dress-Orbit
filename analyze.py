@@ -3,6 +3,7 @@
 
 import argparse
 import concurrent.futures
+import fnmatch
 import html
 import json
 import math
@@ -149,6 +150,63 @@ def get_contributor_identity(entry: dict) -> tuple[str | None, str, bool]:
                 return f"anon:{field}:{normalized}", display, False
 
     return None, "", False
+
+
+def load_project_blacklist(blacklist_path: str) -> list[str]:
+    if not blacklist_path:
+        return []
+
+    try:
+        with open(blacklist_path, encoding="utf-8") as fh:
+            raw_lines = fh.readlines()
+    except FileNotFoundError:
+        logger.warning("project blacklist file not found: {}", blacklist_path)
+        return []
+
+    deduped_rules: dict[str, str] = {}
+    for raw_line in raw_lines:
+        rule = raw_line.strip()
+        if not rule or rule.startswith("#"):
+            continue
+        deduped_rules.setdefault(rule.lower(), rule)
+
+    rules = list(deduped_rules.values())
+    logger.info("loaded {} project blacklist rules from {}", len(rules), blacklist_path)
+    return rules
+
+
+def match_project_blacklist(full_name: str, blacklist_rules: list[str]) -> str | None:
+    candidate = full_name.lower()
+    for rule in blacklist_rules:
+        normalized_rule = rule.lower()
+        if any(token in normalized_rule for token in "*?["):
+            if fnmatch.fnmatch(candidate, normalized_rule):
+                return rule
+            continue
+        if candidate == normalized_rule:
+            return rule
+    return None
+
+
+def filter_blacklisted_projects(
+    projects: list[dict],
+    blacklist_rules: list[str],
+) -> tuple[list[dict], list[dict]]:
+    if not blacklist_rules:
+        return projects, []
+
+    kept: list[dict] = []
+    excluded: list[dict] = []
+    for project in projects:
+        matched_rule = match_project_blacklist(project["full_name"], blacklist_rules)
+        if matched_rule:
+            excluded_project = dict(project)
+            excluded_project["blacklist_rule"] = matched_rule
+            excluded.append(excluded_project)
+            continue
+        kept.append(project)
+
+    return kept, excluded
 
 
 def get_all_contributors(owner_repo: str, token: str) -> tuple[dict[str, dict], int]:
@@ -611,14 +669,13 @@ def aggregate_project_overlap(
     return projects, developer_records, total_search_calls, last_rate_snapshot
 
 
-def enrich_top_projects(projects: list[dict], token: str, limit: int, workers: int) -> None:
-    target_projects = projects[:limit]
-    if not target_projects:
+def enrich_projects(projects: list[dict], token: str, workers: int) -> None:
+    if not projects:
         return
 
     if workers <= 1:
         for project in tqdm(
-            target_projects,
+            projects,
             desc="Enriching metadata",
             unit="repo",
             dynamic_ncols=True,
@@ -627,13 +684,13 @@ def enrich_top_projects(projects: list[dict], token: str, limit: int, workers: i
             project.update(get_repo_meta(project["full_name"], token))
         return
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=min(workers, len(target_projects))) as executor:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=min(workers, len(projects))) as executor:
         future_to_project = {
             executor.submit(get_repo_meta, project["full_name"], token): project
-            for project in target_projects
+            for project in projects
         }
         with tqdm(
-            total=len(target_projects),
+            total=len(projects),
             desc="Enriching metadata",
             unit="repo",
             dynamic_ncols=True,
@@ -653,6 +710,11 @@ def format_samples(sample_logins: list[str]) -> str:
     return ", ".join(f"@{login}" for login in sample_logins)
 
 
+def get_markdown_relpath(target_path: str, readme_path: str) -> str:
+    readme_dir = os.path.dirname(os.path.abspath(readme_path)) or "."
+    return os.path.relpath(os.path.abspath(target_path), start=readme_dir).replace("\\", "/")
+
+
 def build_readme_section(
     base_repo: str,
     total_contributors: int,
@@ -661,11 +723,16 @@ def build_readme_section(
     anonymous_matchable_contributors: int,
     search_pages: int,
     shared_projects: list[dict],
+    clean_projects: list[dict],
     mirror_excluded_count: int,
+    blacklist_excluded_count: int,
+    blacklist_rule_count: int,
     mirror_check_limit: int,
     mirror_score_threshold: int,
     updated_at: str,
     svg_markdown_path: str,
+    clean_svg_markdown_path: str,
+    blacklist_markdown_path: str,
 ) -> str:
     lines: list[str] = []
     lines.append("## 分析结果\n")
@@ -683,18 +750,25 @@ def build_readme_section(
     lines.append(f"| 可独立追踪开发者数（GitHub 登录） | {login_contributors} |")
     lines.append(f"| 匿名但可匹配身份数 | {anonymous_matchable_contributors} |")
     lines.append(f"| 发现的共现项目数 | {len(shared_projects)} |")
+    lines.append(f"| 去噪后共现项目数 | {len(clean_projects)} |")
     lines.append(f"| 每位开发者检索页数 | {search_pages} |")
     lines.append(f"| 排除镜像疑似项目数 | {mirror_excluded_count} |")
+    lines.append(f"| 项目黑名单规则数 | {blacklist_rule_count} |")
+    lines.append(f"| 项目黑名单排除数 | {blacklist_excluded_count} |")
     lines.append(f"| 镜像检测范围（Top N） | {mirror_check_limit} |")
     lines.append(f"| 镜像判定阈值（score >=） | {mirror_score_threshold} |")
-    lines.append("\n### Orbit 图\n")
-    lines.append(f"![Dress 开发者项目 Orbit 图]({svg_markdown_path})")
+    lines.append("\n### 去噪 Orbit 图\n")
+    lines.append(f"![Dress 开发者项目去噪 Orbit 图]({clean_svg_markdown_path})")
+    lines.append(
+        f"> 去噪规则：自动镜像检测 + 项目黑名单 [{blacklist_markdown_path}]({blacklist_markdown_path})。"
+    )
+    lines.append(f"> 原始对照图仍输出为 [{svg_markdown_path}]({svg_markdown_path})。")
 
-    if shared_projects:
-        lines.append("\n### 共同贡献最多的项目\n")
+    if clean_projects:
+        lines.append("\n### 去噪后共同贡献最多的项目\n")
         lines.append("| 项目 | 共同开发者数 | 这些开发者在 Dress 的提交数 | Stars | 示例开发者 |")
         lines.append("|:--|--:|--:|--:|:--|")
-        for project in shared_projects[:15]:
+        for project in clean_projects[:15]:
             samples = format_samples(project.get("developer_samples", []))
             stars = project.get("stargazers_count", 0)
             lines.append(
@@ -705,12 +779,19 @@ def build_readme_section(
                 f" | {samples} |"
             )
     else:
-        lines.append("\n> 未发现可统计的共现项目。\n")
+        lines.append("\n> 去噪后未发现可统计的共现项目。\n")
 
     return "\n".join(lines)
 
 
-def build_svg_chart(base_repo: str, total_developers: int, projects: list[dict], updated_at: str) -> str:
+def build_svg_chart(
+    base_repo: str,
+    total_developers: int,
+    projects: list[dict],
+    updated_at: str,
+    chart_title: str,
+    chart_description: str,
+) -> str:
     top_projects = projects[:12]
     ranking_projects = projects[:8]
     width = 1280
@@ -796,11 +877,12 @@ def build_svg_chart(base_repo: str, total_developers: int, projects: list[dict],
 
     orbit_nodes_svg = "\n".join(project_nodes)
     ranking_svg = "\n".join(ranking_rows)
-    title = html.escape("Dress Developer Orbit")
+    title = html.escape(chart_title)
+    chart_description_esc = html.escape(chart_description)
     updated_at_esc = html.escape(updated_at)
     base_repo_esc = html.escape(base_repo)
 
-    return f"""<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{width}\" height=\"{height}\" viewBox=\"0 0 {width} {height}\" role=\"img\" aria-labelledby=\"title desc\">\n  <title id=\"title\">{title}</title>\n  <desc id=\"desc\">Orbit-style visualization of projects that share Dress contributors.</desc>\n  <defs>\n    <linearGradient id=\"bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#f7fbff\"/>\n      <stop offset=\"55%\" stop-color=\"#eefbf6\"/>\n      <stop offset=\"100%\" stop-color=\"#fff7ed\"/>\n    </linearGradient>\n    <filter id=\"softShadow\" x=\"-20%\" y=\"-20%\" width=\"140%\" height=\"140%\">\n      <feDropShadow dx=\"0\" dy=\"8\" stdDeviation=\"16\" flood-color=\"#0f172a\" flood-opacity=\"0.18\"/>\n    </filter>\n  </defs>\n\n  <rect x=\"0\" y=\"0\" width=\"{width}\" height=\"{height}\" fill=\"url(#bg)\"/>\n  <text x=\"50\" y=\"68\" fill=\"#0f172a\" font-size=\"34\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"700\">{title}</text>\n  <text x=\"50\" y=\"100\" fill=\"#475569\" font-size=\"15\" font-family=\"Segoe UI, Arial, sans-serif\">Base repository: {base_repo_esc} | Trackable developers: {total_developers} | Updated at {updated_at_esc}</text>\n\n  <rect x=\"{left_panel_x}\" y=\"{panel_top}\" width=\"{left_panel_w}\" height=\"{panel_height}\" rx=\"28\" fill=\"#ffffff\" fill-opacity=\"0.82\" filter=\"url(#softShadow)\"/>\n  <circle cx=\"{center_x}\" cy=\"{center_y}\" r=\"280\" fill=\"none\" stroke=\"#dbeafe\" stroke-width=\"2\" stroke-dasharray=\"10 12\"/>\n  <circle cx=\"{center_x}\" cy=\"{center_y}\" r=\"215\" fill=\"none\" stroke=\"#bfdbfe\" stroke-width=\"2\" stroke-dasharray=\"8 12\"/>\n  <circle cx=\"{center_x}\" cy=\"{center_y}\" r=\"145\" fill=\"none\" stroke=\"#93c5fd\" stroke-width=\"2\" stroke-dasharray=\"6 10\"/>\n{orbit_nodes_svg}\n  <circle cx=\"{center_x}\" cy=\"{center_y}\" r=\"74\" fill=\"#f59e0b\" fill-opacity=\"0.2\" stroke=\"#f59e0b\" stroke-width=\"3\" filter=\"url(#softShadow)\"/>\n  <text x=\"{center_x}\" y=\"{center_y - 7}\" text-anchor=\"middle\" fill=\"#0f172a\" font-size=\"30\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"800\">Dress</text>\n  <text x=\"{center_x}\" y=\"{center_y + 21}\" text-anchor=\"middle\" fill=\"#334155\" font-size=\"13\" font-family=\"Segoe UI, Arial, sans-serif\">developer orbit center</text>\n\n  <rect x=\"{right_panel_x}\" y=\"{panel_top}\" width=\"{right_panel_w}\" height=\"{panel_height}\" rx=\"28\" fill=\"#ffffff\" fill-opacity=\"0.88\" filter=\"url(#softShadow)\"/>\n  <text x=\"770\" y=\"174\" fill=\"#0f172a\" font-size=\"22\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"700\">Top Shared Projects</text>\n  <text x=\"770\" y=\"202\" fill=\"#64748b\" font-size=\"13\" font-family=\"Segoe UI, Arial, sans-serif\">按共同开发者数量排序，展示最强共现项目</text>\n  <text x=\"770\" y=\"246\" fill=\"#0f172a\" font-size=\"16\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"700\">统计摘要</text>\n  <text x=\"770\" y=\"278\" fill=\"#334155\" font-size=\"14\" font-family=\"Segoe UI, Arial, sans-serif\">共现项目数: {len(projects)}</text>\n  <text x=\"770\" y=\"306\" fill=\"#334155\" font-size=\"14\" font-family=\"Segoe UI, Arial, sans-serif\">轨道中展示项目数: {len(top_projects)}</text>\n  <text x=\"770\" y=\"334\" fill=\"#334155\" font-size=\"14\" font-family=\"Segoe UI, Arial, sans-serif\">最大共同开发者数: {max_shared}</text>\n  <text x=\"770\" y=\"362\" fill=\"#334155\" font-size=\"14\" font-family=\"Segoe UI, Arial, sans-serif\">中心仓库: {base_repo_esc}</text>\n  <text x=\"770\" y=\"{rank_title_y}\" fill=\"#0f172a\" font-size=\"16\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"700\">排行 (Top {len(ranking_projects)})</text>\n{ranking_svg}\n\n  <text x=\"50\" y=\"{footer_y}\" fill=\"#64748b\" font-size=\"13\" font-family=\"Segoe UI, Arial, sans-serif\">Method: public commit search by Dress contributors' GitHub logins; anonymous contributors are excluded from orbit matching.</text>\n</svg>\n"""
+    return f"""<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{width}\" height=\"{height}\" viewBox=\"0 0 {width} {height}\" role=\"img\" aria-labelledby=\"title desc\">\n  <title id=\"title\">{title}</title>\n  <desc id=\"desc\">{chart_description_esc}</desc>\n  <defs>\n    <linearGradient id=\"bg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n      <stop offset=\"0%\" stop-color=\"#f7fbff\"/>\n      <stop offset=\"55%\" stop-color=\"#eefbf6\"/>\n      <stop offset=\"100%\" stop-color=\"#fff7ed\"/>\n    </linearGradient>\n    <filter id=\"softShadow\" x=\"-20%\" y=\"-20%\" width=\"140%\" height=\"140%\">\n      <feDropShadow dx=\"0\" dy=\"8\" stdDeviation=\"16\" flood-color=\"#0f172a\" flood-opacity=\"0.18\"/>\n    </filter>\n  </defs>\n\n  <rect x=\"0\" y=\"0\" width=\"{width}\" height=\"{height}\" fill=\"url(#bg)\"/>\n  <text x=\"50\" y=\"68\" fill=\"#0f172a\" font-size=\"34\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"700\">{title}</text>\n  <text x=\"50\" y=\"100\" fill=\"#475569\" font-size=\"15\" font-family=\"Segoe UI, Arial, sans-serif\">Base repository: {base_repo_esc} | Trackable developers: {total_developers} | Updated at {updated_at_esc}</text>\n\n  <rect x=\"{left_panel_x}\" y=\"{panel_top}\" width=\"{left_panel_w}\" height=\"{panel_height}\" rx=\"28\" fill=\"#ffffff\" fill-opacity=\"0.82\" filter=\"url(#softShadow)\"/>\n  <circle cx=\"{center_x}\" cy=\"{center_y}\" r=\"280\" fill=\"none\" stroke=\"#dbeafe\" stroke-width=\"2\" stroke-dasharray=\"10 12\"/>\n  <circle cx=\"{center_x}\" cy=\"{center_y}\" r=\"215\" fill=\"none\" stroke=\"#bfdbfe\" stroke-width=\"2\" stroke-dasharray=\"8 12\"/>\n  <circle cx=\"{center_x}\" cy=\"{center_y}\" r=\"145\" fill=\"none\" stroke=\"#93c5fd\" stroke-width=\"2\" stroke-dasharray=\"6 10\"/>\n{orbit_nodes_svg}\n  <circle cx=\"{center_x}\" cy=\"{center_y}\" r=\"74\" fill=\"#f59e0b\" fill-opacity=\"0.2\" stroke=\"#f59e0b\" stroke-width=\"3\" filter=\"url(#softShadow)\"/>\n  <text x=\"{center_x}\" y=\"{center_y - 7}\" text-anchor=\"middle\" fill=\"#0f172a\" font-size=\"30\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"800\">Dress</text>\n  <text x=\"{center_x}\" y=\"{center_y + 21}\" text-anchor=\"middle\" fill=\"#334155\" font-size=\"13\" font-family=\"Segoe UI, Arial, sans-serif\">developer orbit center</text>\n\n  <rect x=\"{right_panel_x}\" y=\"{panel_top}\" width=\"{right_panel_w}\" height=\"{panel_height}\" rx=\"28\" fill=\"#ffffff\" fill-opacity=\"0.88\" filter=\"url(#softShadow)\"/>\n  <text x=\"770\" y=\"174\" fill=\"#0f172a\" font-size=\"22\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"700\">Top Shared Projects</text>\n  <text x=\"770\" y=\"202\" fill=\"#64748b\" font-size=\"13\" font-family=\"Segoe UI, Arial, sans-serif\">按共同开发者数量排序，展示最强共现项目</text>\n  <text x=\"770\" y=\"246\" fill=\"#0f172a\" font-size=\"16\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"700\">统计摘要</text>\n  <text x=\"770\" y=\"278\" fill=\"#334155\" font-size=\"14\" font-family=\"Segoe UI, Arial, sans-serif\">共现项目数: {len(projects)}</text>\n  <text x=\"770\" y=\"306\" fill=\"#334155\" font-size=\"14\" font-family=\"Segoe UI, Arial, sans-serif\">轨道中展示项目数: {len(top_projects)}</text>\n  <text x=\"770\" y=\"334\" fill=\"#334155\" font-size=\"14\" font-family=\"Segoe UI, Arial, sans-serif\">最大共同开发者数: {max_shared}</text>\n  <text x=\"770\" y=\"362\" fill=\"#334155\" font-size=\"14\" font-family=\"Segoe UI, Arial, sans-serif\">中心仓库: {base_repo_esc}</text>\n  <text x=\"770\" y=\"{rank_title_y}\" fill=\"#0f172a\" font-size=\"16\" font-family=\"Segoe UI, Arial, sans-serif\" font-weight=\"700\">排行 (Top {len(ranking_projects)})</text>\n{ranking_svg}\n\n  <text x=\"50\" y=\"{footer_y}\" fill=\"#64748b\" font-size=\"13\" font-family=\"Segoe UI, Arial, sans-serif\">{chart_description_esc}</text>\n</svg>\n"""
 
 
 def update_readme(section: str, readme_path: str) -> None:
@@ -854,9 +936,24 @@ def main() -> None:
         help="Path to output JSON data (default: dress_orbit.json)",
     )
     parser.add_argument(
+        "--clean-json-out",
+        default="dress_orbit_clean.json",
+        help="Path to output de-noised JSON data (default: dress_orbit_clean.json)",
+    )
+    parser.add_argument(
         "--svg-out",
         default="dress_orbit.svg",
         help="Path to output SVG chart (default: dress_orbit.svg)",
+    )
+    parser.add_argument(
+        "--clean-svg-out",
+        default="dress_orbit_clean.svg",
+        help="Path to output de-noised SVG chart (default: dress_orbit_clean.svg)",
+    )
+    parser.add_argument(
+        "--project-blacklist",
+        default="blacklist/projects.txt",
+        help="Path to a project blacklist file; one owner/repo or glob per line (default: blacklist/projects.txt)",
     )
     parser.add_argument(
         "--search-pages",
@@ -909,6 +1006,8 @@ def main() -> None:
             "GITHUB_TOKEN not set; authenticated access is strongly recommended for commit search."
         )
 
+    project_blacklist_rules = load_project_blacklist(args.project_blacklist)
+
     logger.info("Fetching contributors: {}", args.base_repo)
     contributors, total_contributors = get_all_contributors(args.base_repo, args.token)
     login_contributors = sum(1 for contributor in contributors.values() if contributor["is_login"])
@@ -938,10 +1037,26 @@ def main() -> None:
         max(1, args.mirror_score_threshold),
     )
     shared_projects = filtered_projects
-    enrich_top_projects(shared_projects, args.token, args.meta_project_limit, workers)
+    clean_projects, excluded_blacklisted_projects = filter_blacklisted_projects(
+        shared_projects,
+        project_blacklist_rules,
+    )
+
+    projects_to_enrich: list[dict] = []
+    seen_project_names: set[str] = set()
+    for project_list in (shared_projects[: args.meta_project_limit], clean_projects[: args.meta_project_limit]):
+        for project in project_list:
+            full_name = project["full_name"]
+            if full_name in seen_project_names:
+                continue
+            seen_project_names.add(full_name)
+            projects_to_enrich.append(project)
+
+    enrich_projects(projects_to_enrich, args.token, workers)
 
     updated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     top_project = shared_projects[0] if shared_projects else None
+    clean_top_project = clean_projects[0] if clean_projects else None
 
     result = {
         "updated_at": updated_at,
@@ -965,9 +1080,31 @@ def main() -> None:
                 "excluded_count": len(excluded_mirror_projects),
                 "base_default_branch_head_sha": base_head_sha,
             },
+            "project_blacklist": {
+                "path": args.project_blacklist,
+                "rule_count": len(project_blacklist_rules),
+                "excluded_count": len(excluded_blacklisted_projects),
+            },
         },
         "top_project": top_project,
         "projects": shared_projects,
+        "excluded_mirror_like_projects": excluded_mirror_projects,
+        "clean": {
+            "top_project": clean_top_project,
+            "projects": clean_projects,
+            "excluded_blacklisted_projects": excluded_blacklisted_projects,
+        },
+        "developers": developer_records,
+    }
+
+    clean_result = {
+        "updated_at": updated_at,
+        "base_repo": args.base_repo,
+        "contributors": result["contributors"],
+        "scan": result["scan"],
+        "top_project": clean_top_project,
+        "projects": clean_projects,
+        "excluded_blacklisted_projects": excluded_blacklisted_projects,
         "excluded_mirror_like_projects": excluded_mirror_projects,
         "developers": developer_records,
     }
@@ -976,13 +1113,37 @@ def main() -> None:
         json.dump(result, fh, ensure_ascii=False, indent=2)
     logger.success("Saved: {}", args.json_out)
 
-    svg = build_svg_chart(args.base_repo, login_contributors, shared_projects, updated_at)
+    with open(args.clean_json_out, "w", encoding="utf-8") as fh:
+        json.dump(clean_result, fh, ensure_ascii=False, indent=2)
+    logger.success("Saved: {}", args.clean_json_out)
+
+    svg = build_svg_chart(
+        args.base_repo,
+        login_contributors,
+        shared_projects,
+        updated_at,
+        "Dress Developer Orbit",
+        "Method: public commit search by Dress contributors' GitHub logins; anonymous contributors are excluded from orbit matching.",
+    )
     with open(args.svg_out, "w", encoding="utf-8") as fh:
         fh.write(svg)
     logger.success("Saved: {}", args.svg_out)
 
-    readme_dir = os.path.dirname(os.path.abspath(args.readme)) or "."
-    svg_markdown_path = os.path.relpath(os.path.abspath(args.svg_out), start=readme_dir).replace("\\", "/")
+    clean_svg = build_svg_chart(
+        args.base_repo,
+        login_contributors,
+        clean_projects,
+        updated_at,
+        "Dress Developer Orbit (Clean)",
+        "Method: public commit search by Dress contributors' GitHub logins, then exclude mirror-like projects and manually blacklisted noise repositories.",
+    )
+    with open(args.clean_svg_out, "w", encoding="utf-8") as fh:
+        fh.write(clean_svg)
+    logger.success("Saved: {}", args.clean_svg_out)
+
+    svg_markdown_path = get_markdown_relpath(args.svg_out, args.readme)
+    clean_svg_markdown_path = get_markdown_relpath(args.clean_svg_out, args.readme)
+    blacklist_markdown_path = get_markdown_relpath(args.project_blacklist, args.readme)
 
     section = build_readme_section(
         args.base_repo,
@@ -992,22 +1153,27 @@ def main() -> None:
         anonymous_matchable_contributors,
         args.search_pages,
         shared_projects,
+        clean_projects,
         len(excluded_mirror_projects),
+        len(excluded_blacklisted_projects),
+        len(project_blacklist_rules),
         max(0, args.mirror_check_limit),
         max(1, args.mirror_score_threshold),
         updated_at,
         svg_markdown_path,
+        clean_svg_markdown_path,
+        blacklist_markdown_path,
     )
     update_readme(section, args.readme)
 
-    if top_project:
+    if clean_top_project:
         logger.success(
-            "Done - top shared project is {} with {} shared Dress developers.",
-            top_project["full_name"],
-            top_project["shared_developer_count"],
+            "Done - clean top shared project is {} with {} shared Dress developers.",
+            clean_top_project["full_name"],
+            clean_top_project["shared_developer_count"],
         )
     else:
-        logger.success("Done - no shared public projects were discovered.")
+        logger.success("Done - no de-noised shared public projects were discovered.")
 
 
 if __name__ == "__main__":

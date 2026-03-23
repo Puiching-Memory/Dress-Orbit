@@ -1,0 +1,35 @@
+# One owner/repo or glob rule per line.
+# Empty lines and lines starting with # are ignored.
+# Examples:
+#   owner/repo
+#   */Dress
+
+Aira-Sakuranomiya/Dress-Backup-Detached
+Misaka-0x447f/Dress
+later2x/Cute-Dress
+Reconi-rino/Dress
+seven-original-sins/copy-the-dress
+zi4dbek-org/Dress
+Pluto-xx/test-dress
+
+# Dress backups / mirrors still missed by automatic detection
+xielan5779/-nz
+link91319430/int
+967149552/-
+Pasyware/DressTycoon
+yzjdxfss/TamakinJoSou
+
+# Repeated RSSHub copies with zero stars
+wherexml/RSSHub
+kingdaxiang/RSSHub
+backnero/RSSHub
+fengixng/RSSHub3
+rayepeng/RSSHub1
+
+# Repeated is-a-dev register copies / mirrors
+Hysteria13437/register
+GabrielAraujoAndrade/register
+VVVVGGGG/VardaanKrishneet
+
+# Same project mirrored under another owner/name
+Destiny1980/-Minecraft-Mod-Language-Package

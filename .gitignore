@@ -1,2 +1,5 @@
 .venv/
 __pycache__/
+contributor_overlap.json
+dress_orbit.json
+dress_orbit_clean.json
