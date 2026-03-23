@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="986" viewBox="0 0 1280 986" role="img" aria-labelledby="title desc">
   <title id="title">Dress Developer Orbit</title>
-  <desc id="desc">Orbit-style visualization of projects that share Dress contributors.</desc>
+  <desc id="desc">Method: public commit search by Dress contributors&#x27; GitHub logins; anonymous contributors are excluded from orbit matching.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#f7fbff"/>
@@ -14,7 +14,7 @@
 
   <rect x="0" y="0" width="1280" height="986" fill="url(#bg)"/>
   <text x="50" y="68" fill="#0f172a" font-size="34" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Dress Developer Orbit</text>
-  <text x="50" y="100" fill="#475569" font-size="15" font-family="Segoe UI, Arial, sans-serif">Base repository: Cute-Dress/Dress | Trackable developers: 368 | Updated at 2026-03-23 09:48 UTC</text>
+  <text x="50" y="100" fill="#475569" font-size="15" font-family="Segoe UI, Arial, sans-serif">Base repository: Cute-Dress/Dress | Trackable developers: 368 | Updated at 2026-03-23 10:24 UTC</text>
 
   <rect x="30" y="126" width="680" height="788" rx="28" fill="#ffffff" fill-opacity="0.82" filter="url(#softShadow)"/>
   <circle cx="360" cy="430" r="280" fill="none" stroke="#dbeafe" stroke-width="2" stroke-dasharray="10 12"/>
@@ -97,7 +97,7 @@
   <rect x="770" y="466" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="466" width="438" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="477" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">214</text>
-  <text x="770" y="494" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @zumoA, @komeiji-satori</text>
+  <text x="770" y="494" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @komeiji-satori, @zumoA</text>
   <text x="770" y="510" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">2. Misaka-0x447f/Dress</text>
   <rect x="770" y="522" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="522" width="426" height="12" rx="6" fill="#0f766e"/>
@@ -107,7 +107,7 @@
   <rect x="770" y="578" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="578" width="354" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="589" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">173</text>
-  <text x="770" y="606" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @zumoA, @komeiji-satori</text>
+  <text x="770" y="606" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @komeiji-satori, @zumoA</text>
   <text x="770" y="622" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">4. later2x/Cute-Dress</text>
   <rect x="770" y="634" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="634" width="223" height="12" rx="6" fill="#0f766e"/>
@@ -117,12 +117,12 @@
   <rect x="770" y="690" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="690" width="219" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="701" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">107</text>
-  <text x="770" y="718" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @akinazuki, @kagurazakayashi</text>
+  <text x="770" y="718" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @komeiji-satori, @akinazuki</text>
   <text x="770" y="734" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">6. Reconi-rino/Dress</text>
   <rect x="770" y="746" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="746" width="190" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="757" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">93</text>
-  <text x="770" y="774" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @Cannedcha, @KagurazakaYuri</text>
+  <text x="770" y="774" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @Cannedcha, @yosasa</text>
   <text x="770" y="790" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">7. seven-original-sins/copy-the-dress</text>
   <rect x="770" y="802" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="802" width="166" height="12" rx="6" fill="#0f766e"/>
@@ -134,5 +134,5 @@
   <text x="1210" y="869" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">78</text>
   <text x="770" y="886" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @XHidamariSketchX, @Smolder3955</text>
 
-  <text x="50" y="954" fill="#64748b" font-size="13" font-family="Segoe UI, Arial, sans-serif">Method: public commit search by Dress contributors' GitHub logins; anonymous contributors are excluded from orbit matching.</text>
+  <text x="50" y="954" fill="#64748b" font-size="13" font-family="Segoe UI, Arial, sans-serif">Method: public commit search by Dress contributors&#x27; GitHub logins; anonymous contributors are excluded from orbit matching.</text>
 </svg>
