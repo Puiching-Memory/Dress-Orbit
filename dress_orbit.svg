@@ -14,7 +14,7 @@
 
   <rect x="0" y="0" width="1280" height="986" fill="url(#bg)"/>
   <text x="50" y="68" fill="#0f172a" font-size="34" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Dress Developer Orbit</text>
-  <text x="50" y="100" fill="#475569" font-size="15" font-family="Segoe UI, Arial, sans-serif">Base repository: Cute-Dress/Dress | Trackable developers: 368 | Updated at 2026-03-23 10:24 UTC</text>
+  <text x="50" y="100" fill="#475569" font-size="15" font-family="Segoe UI, Arial, sans-serif">Base repository: Cute-Dress/Dress | Trackable developers: 368 | Updated at 2026-03-23 11:01 UTC</text>
 
   <rect x="30" y="126" width="680" height="788" rx="28" fill="#ffffff" fill-opacity="0.82" filter="url(#softShadow)"/>
   <circle cx="360" cy="430" r="280" fill="none" stroke="#dbeafe" stroke-width="2" stroke-dasharray="10 12"/>
@@ -117,7 +117,7 @@
   <rect x="770" y="690" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="690" width="219" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="701" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">107</text>
-  <text x="770" y="718" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @komeiji-satori, @akinazuki</text>
+  <text x="770" y="718" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @komeiji-satori, @kagurazakayashi</text>
   <text x="770" y="734" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">6. Reconi-rino/Dress</text>
   <rect x="770" y="746" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="746" width="190" height="12" rx="6" fill="#0f766e"/>
