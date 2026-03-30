@@ -14,7 +14,7 @@
 
   <rect x="0" y="0" width="1280" height="986" fill="url(#bg)"/>
   <text x="50" y="68" fill="#0f172a" font-size="34" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Dress Developer Orbit (Clean)</text>
-  <text x="50" y="100" fill="#475569" font-size="15" font-family="Segoe UI, Arial, sans-serif">Base repository: Cute-Dress/Dress | Trackable developers: 368 | Updated at 2026-03-23 11:01 UTC</text>
+  <text x="50" y="100" fill="#475569" font-size="15" font-family="Segoe UI, Arial, sans-serif">Base repository: Cute-Dress/Dress | Trackable developers: 369 | Updated at 2026-03-30 02:42 UTC</text>
 
   <rect x="30" y="126" width="680" height="788" rx="28" fill="#ffffff" fill-opacity="0.82" filter="url(#softShadow)"/>
   <circle cx="360" cy="430" r="280" fill="none" stroke="#dbeafe" stroke-width="2" stroke-dasharray="10 12"/>
@@ -88,7 +88,7 @@
   <text x="770" y="174" fill="#0f172a" font-size="22" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Top Shared Projects</text>
   <text x="770" y="202" fill="#64748b" font-size="13" font-family="Segoe UI, Arial, sans-serif">按共同开发者数量排序，展示最强共现项目</text>
   <text x="770" y="246" fill="#0f172a" font-size="16" font-family="Segoe UI, Arial, sans-serif" font-weight="700">统计摘要</text>
-  <text x="770" y="278" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">共现项目数: 2816</text>
+  <text x="770" y="278" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">共现项目数: 2813</text>
   <text x="770" y="306" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">轨道中展示项目数: 12</text>
   <text x="770" y="334" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">最大共同开发者数: 19</text>
   <text x="770" y="362" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">中心仓库: Cute-Dress/Dress</text>
