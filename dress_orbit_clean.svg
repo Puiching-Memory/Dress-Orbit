@@ -14,7 +14,7 @@
 
   <rect x="0" y="0" width="1280" height="986" fill="url(#bg)"/>
   <text x="50" y="68" fill="#0f172a" font-size="34" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Dress Developer Orbit (Clean)</text>
-  <text x="50" y="100" fill="#475569" font-size="15" font-family="Segoe UI, Arial, sans-serif">Base repository: Cute-Dress/Dress | Trackable developers: 372 | Updated at 2026-04-13 02:52 UTC</text>
+  <text x="50" y="100" fill="#475569" font-size="15" font-family="Segoe UI, Arial, sans-serif">Base repository: Cute-Dress/Dress | Trackable developers: 372 | Updated at 2026-04-20 02:53 UTC</text>
 
   <rect x="30" y="126" width="680" height="788" rx="28" fill="#ffffff" fill-opacity="0.82" filter="url(#softShadow)"/>
   <circle cx="360" cy="430" r="280" fill="none" stroke="#dbeafe" stroke-width="2" stroke-dasharray="10 12"/>
@@ -23,63 +23,63 @@
   <line x1="360" y1="430" x2="360.0" y2="285.0" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
   <circle cx="360.0" cy="285.0" r="44.0" fill="#2563eb" fill-opacity="0.18" stroke="#2563eb" stroke-width="2"/>
   <text x="360.0" y="283.0" text-anchor="middle" fill="#0f172a" font-size="12" font-family="Segoe UI, Arial, sans-serif" font-weight="700">LGBTQIA-In...</text>
-  <text x="360.0" y="299.0" text-anchor="middle" fill="#334155" font-size="11" font-family="Segoe UI, Arial, sans-serif">18人</text>
-  <title>LGBT-CN/LGBTQIA-In-China: 18 shared developers</title>
+  <text x="360.0" y="299.0" text-anchor="middle" fill="#334155" font-size="11" font-family="Segoe UI, Arial, sans-serif">17人</text>
+  <title>LGBT-CN/LGBTQIA-In-China: 17 shared developers</title>
   <line x1="360" y1="430" x2="467.5" y2="243.8" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="467.5" cy="243.8" r="30.5" fill="#0ea5e9" fill-opacity="0.18" stroke="#0ea5e9" stroke-width="2"/>
+  <circle cx="467.5" cy="243.8" r="31.3" fill="#0ea5e9" fill-opacity="0.18" stroke="#0ea5e9" stroke-width="2"/>
   <text x="467.5" y="241.8" text-anchor="middle" fill="#0f172a" font-size="12" font-family="Segoe UI, Arial, sans-serif" font-weight="700">MtF-wiki</text>
   <text x="467.5" y="257.8" text-anchor="middle" fill="#334155" font-size="11" font-family="Segoe UI, Arial, sans-serif">9人</text>
   <title>project-trans/MtF-wiki: 9 shared developers</title>
   <line x1="360" y1="430" x2="602.5" y2="290.0" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="602.5" cy="290.0" r="27.5" fill="#14b8a6" fill-opacity="0.18" stroke="#14b8a6" stroke-width="2"/>
+  <circle cx="602.5" cy="290.0" r="28.1" fill="#14b8a6" fill-opacity="0.18" stroke="#14b8a6" stroke-width="2"/>
   <text x="602.5" y="288.0" text-anchor="middle" fill="#0f172a" font-size="11" font-family="Segoe UI, Arial, sans-serif" font-weight="700">imagi...</text>
   <text x="602.5" y="304.0" text-anchor="middle" fill="#334155" font-size="10" font-family="Segoe UI, Arial, sans-serif">7人</text>
   <title>cirosantilli/imagine-all-the-people: 7 shared developers</title>
   <line x1="360" y1="430" x2="505.0" y2="430.0" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="505.0" cy="430.0" r="23.0" fill="#f97316" fill-opacity="0.18" stroke="#f97316" stroke-width="2"/>
-  <text x="505.0" y="428.0" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Aeo...</text>
+  <circle cx="505.0" cy="430.0" r="23.4" fill="#f97316" fill-opacity="0.18" stroke="#f97316" stroke-width="2"/>
+  <text x="505.0" y="428.0" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Que...</text>
   <text x="505.0" y="444.0" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">4人</text>
-  <title>Aleks-Aeon/Aeon-Airi: 4 shared developers</title>
+  <title>StarMastar1128/Queen_DefinitelyTyped: 4 shared developers</title>
   <line x1="360" y1="430" x2="546.2" y2="537.5" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="546.2" cy="537.5" r="23.0" fill="#2563eb" fill-opacity="0.18" stroke="#2563eb" stroke-width="2"/>
-  <text x="546.2" y="535.5" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Min...</text>
+  <circle cx="546.2" cy="537.5" r="23.4" fill="#2563eb" fill-opacity="0.18" stroke="#2563eb" stroke-width="2"/>
+  <text x="546.2" y="535.5" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Aeo...</text>
   <text x="546.2" y="551.5" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">4人</text>
-  <title>CFPAOrg/Minecraft-Mod-Language-Package: 4 shared developers</title>
+  <title>Aleks-Aeon/Aeon-Airi: 4 shared developers</title>
   <line x1="360" y1="430" x2="500.0" y2="672.5" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="500.0" cy="672.5" r="23.0" fill="#0ea5e9" fill-opacity="0.18" stroke="#0ea5e9" stroke-width="2"/>
-  <text x="500.0" y="670.5" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">ncnn</text>
+  <circle cx="500.0" cy="672.5" r="23.4" fill="#0ea5e9" fill-opacity="0.18" stroke="#0ea5e9" stroke-width="2"/>
+  <text x="500.0" y="670.5" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Min...</text>
   <text x="500.0" y="686.5" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">4人</text>
-  <title>androidHarlan/ncnn: 4 shared developers</title>
+  <title>CFPAOrg/Minecraft-Mod-Language-Package: 4 shared developers</title>
   <line x1="360" y1="430" x2="360.0" y2="575.0" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="360.0" cy="575.0" r="23.0" fill="#14b8a6" fill-opacity="0.18" stroke="#14b8a6" stroke-width="2"/>
-  <text x="360.0" y="573.0" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">dayly</text>
+  <circle cx="360.0" cy="575.0" r="23.4" fill="#14b8a6" fill-opacity="0.18" stroke="#14b8a6" stroke-width="2"/>
+  <text x="360.0" y="573.0" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">bil...</text>
   <text x="360.0" y="589.0" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">4人</text>
-  <title>devnghien/dayly: 4 shared developers</title>
+  <title>AsahinaMafuuyuu/bilibili-API-collect: 4 shared developers</title>
   <line x1="360" y1="430" x2="252.5" y2="616.2" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="252.5" cy="616.2" r="23.0" fill="#f97316" fill-opacity="0.18" stroke="#f97316" stroke-width="2"/>
-  <text x="252.5" y="614.2" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">reg...</text>
+  <circle cx="252.5" cy="616.2" r="23.4" fill="#f97316" fill-opacity="0.18" stroke="#f97316" stroke-width="2"/>
+  <text x="252.5" y="614.2" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">ncnn</text>
   <text x="252.5" y="630.2" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">4人</text>
-  <title>is-a-dev/register: 4 shared developers</title>
+  <title>androidHarlan/ncnn: 4 shared developers</title>
   <line x1="360" y1="430" x2="117.5" y2="570.0" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="117.5" cy="570.0" r="23.0" fill="#2563eb" fill-opacity="0.18" stroke="#2563eb" stroke-width="2"/>
-  <text x="117.5" y="568.0" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">RLE...</text>
+  <circle cx="117.5" cy="570.0" r="23.4" fill="#2563eb" fill-opacity="0.18" stroke="#2563eb" stroke-width="2"/>
+  <text x="117.5" y="568.0" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">dayly</text>
   <text x="117.5" y="584.0" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">4人</text>
-  <title>project-trans/RLE-wiki: 4 shared developers</title>
+  <title>devnghien/dayly: 4 shared developers</title>
   <line x1="360" y1="430" x2="215.0" y2="430.0" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="215.0" cy="430.0" r="21.5" fill="#0ea5e9" fill-opacity="0.18" stroke="#0ea5e9" stroke-width="2"/>
-  <text x="215.0" y="428.0" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Que...</text>
-  <text x="215.0" y="444.0" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">3人</text>
-  <title>StarMastar1128/Queen_DefinitelyTyped: 3 shared developers</title>
+  <circle cx="215.0" cy="430.0" r="23.4" fill="#0ea5e9" fill-opacity="0.18" stroke="#0ea5e9" stroke-width="2"/>
+  <text x="215.0" y="428.0" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">reg...</text>
+  <text x="215.0" y="444.0" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">4人</text>
+  <title>is-a-dev/register: 4 shared developers</title>
   <line x1="360" y1="430" x2="173.8" y2="322.5" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="173.8" cy="322.5" r="21.5" fill="#14b8a6" fill-opacity="0.18" stroke="#14b8a6" stroke-width="2"/>
-  <text x="173.8" y="320.5" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">996...</text>
-  <text x="173.8" y="336.5" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">3人</text>
-  <title>demonet-sandbox/996.ICU: 3 shared developers</title>
+  <circle cx="173.8" cy="322.5" r="23.4" fill="#14b8a6" fill-opacity="0.18" stroke="#14b8a6" stroke-width="2"/>
+  <text x="173.8" y="320.5" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">RLE...</text>
+  <text x="173.8" y="336.5" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">4人</text>
+  <title>project-trans/RLE-wiki: 4 shared developers</title>
   <line x1="360" y1="430" x2="220.0" y2="187.5" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 9"/>
-  <circle cx="220.0" cy="187.5" r="21.5" fill="#f97316" fill-opacity="0.18" stroke="#f97316" stroke-width="2"/>
+  <circle cx="220.0" cy="187.5" r="21.8" fill="#f97316" fill-opacity="0.18" stroke="#f97316" stroke-width="2"/>
   <text x="220.0" y="185.5" text-anchor="middle" fill="#0f172a" font-size="10" font-family="Segoe UI, Arial, sans-serif" font-weight="700">996...</text>
   <text x="220.0" y="201.5" text-anchor="middle" fill="#334155" font-size="9" font-family="Segoe UI, Arial, sans-serif">3人</text>
-  <title>myriad360-sandbox/996.ICU: 3 shared developers</title>
+  <title>demonet-sandbox/996.ICU: 3 shared developers</title>
   <circle cx="360" cy="430" r="74" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="3" filter="url(#softShadow)"/>
   <text x="360" y="423" text-anchor="middle" fill="#0f172a" font-size="30" font-family="Segoe UI, Arial, sans-serif" font-weight="800">Dress</text>
   <text x="360" y="451" text-anchor="middle" fill="#334155" font-size="13" font-family="Segoe UI, Arial, sans-serif">developer orbit center</text>
@@ -88,51 +88,51 @@
   <text x="770" y="174" fill="#0f172a" font-size="22" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Top Shared Projects</text>
   <text x="770" y="202" fill="#64748b" font-size="13" font-family="Segoe UI, Arial, sans-serif">按共同开发者数量排序，展示最强共现项目</text>
   <text x="770" y="246" fill="#0f172a" font-size="16" font-family="Segoe UI, Arial, sans-serif" font-weight="700">统计摘要</text>
-  <text x="770" y="278" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">共现项目数: 2813</text>
+  <text x="770" y="278" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">共现项目数: 2771</text>
   <text x="770" y="306" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">轨道中展示项目数: 12</text>
-  <text x="770" y="334" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">最大共同开发者数: 18</text>
+  <text x="770" y="334" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">最大共同开发者数: 17</text>
   <text x="770" y="362" fill="#334155" font-size="14" font-family="Segoe UI, Arial, sans-serif">中心仓库: Cute-Dress/Dress</text>
   <text x="770" y="416" fill="#0f172a" font-size="16" font-family="Segoe UI, Arial, sans-serif" font-weight="700">排行 (Top 8)</text>
   <text x="770" y="454" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">1. LGBT-CN/LGBTQIA-In-China</text>
   <rect x="770" y="466" width="438" height="12" rx="6" fill="#e2e8f0"/>
   <rect x="770" y="466" width="438" height="12" rx="6" fill="#0f766e"/>
-  <text x="1210" y="477" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">18</text>
+  <text x="1210" y="477" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">17</text>
   <text x="770" y="494" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @BBleae, @AyagawaSeirin</text>
   <text x="770" y="510" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">2. project-trans/MtF-wiki</text>
   <rect x="770" y="522" width="438" height="12" rx="6" fill="#e2e8f0"/>
-  <rect x="770" y="522" width="219" height="12" rx="6" fill="#0f766e"/>
+  <rect x="770" y="522" width="232" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="533" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">9</text>
   <text x="770" y="550" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @Dolyn157, @BingL-Li</text>
   <text x="770" y="566" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">3. cirosantilli/imagine-all-the-people</text>
   <rect x="770" y="578" width="438" height="12" rx="6" fill="#e2e8f0"/>
-  <rect x="770" y="578" width="170" height="12" rx="6" fill="#0f766e"/>
+  <rect x="770" y="578" width="180" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="589" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">7</text>
   <text x="770" y="606" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @sumimakito, @JinXJinX</text>
-  <text x="770" y="622" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">4. Aleks-Aeon/Aeon-Airi</text>
+  <text x="770" y="622" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">4. StarMastar1128/Queen_DefinitelyTyped</text>
   <rect x="770" y="634" width="438" height="12" rx="6" fill="#e2e8f0"/>
-  <rect x="770" y="634" width="97" height="12" rx="6" fill="#0f766e"/>
+  <rect x="770" y="634" width="103" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="645" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">4</text>
-  <text x="770" y="662" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @sumimakito, @Misaka-0x447f</text>
-  <text x="770" y="678" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">5. CFPAOrg/Minecraft-Mod-Language-Package</text>
+  <text x="770" y="662" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @bangbang93, @ObservedObserver</text>
+  <text x="770" y="678" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">5. Aleks-Aeon/Aeon-Airi</text>
   <rect x="770" y="690" width="438" height="12" rx="6" fill="#e2e8f0"/>
-  <rect x="770" y="690" width="97" height="12" rx="6" fill="#0f766e"/>
+  <rect x="770" y="690" width="103" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="701" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">4</text>
-  <text x="770" y="718" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @HinataKato, @hedw1gP</text>
-  <text x="770" y="734" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">6. androidHarlan/ncnn</text>
+  <text x="770" y="718" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @sumimakito, @Misaka-0x447f</text>
+  <text x="770" y="734" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">6. CFPAOrg/Minecraft-Mod-Language-Package</text>
   <rect x="770" y="746" width="438" height="12" rx="6" fill="#e2e8f0"/>
-  <rect x="770" y="746" width="97" height="12" rx="6" fill="#0f766e"/>
+  <rect x="770" y="746" width="103" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="757" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">4</text>
-  <text x="770" y="774" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @mizu-bai, @chisaki-takahashi</text>
-  <text x="770" y="790" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">7. devnghien/dayly</text>
+  <text x="770" y="774" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @HinataKato, @hedw1gP</text>
+  <text x="770" y="790" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">7. AsahinaMafuuyuu/bilibili-API-collect</text>
   <rect x="770" y="802" width="438" height="12" rx="6" fill="#e2e8f0"/>
-  <rect x="770" y="802" width="97" height="12" rx="6" fill="#0f766e"/>
+  <rect x="770" y="802" width="103" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="813" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">4</text>
-  <text x="770" y="830" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @Nigh, @MeguminSama</text>
-  <text x="770" y="846" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">8. is-a-dev/register</text>
+  <text x="770" y="830" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @5ime, @SocialSisterYi</text>
+  <text x="770" y="846" fill="#0f172a" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="600">8. androidHarlan/ncnn</text>
   <rect x="770" y="858" width="438" height="12" rx="6" fill="#e2e8f0"/>
-  <rect x="770" y="858" width="97" height="12" rx="6" fill="#0f766e"/>
+  <rect x="770" y="858" width="103" height="12" rx="6" fill="#0f766e"/>
   <text x="1210" y="869" text-anchor="end" fill="#0f172a" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">4</text>
-  <text x="770" y="886" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @Nigh, @MeguminSama</text>
+  <text x="770" y="886" fill="#64748b" font-size="12" font-family="Segoe UI, Arial, sans-serif">示例: @mizu-bai, @chisaki-takahashi</text>
 
   <text x="50" y="954" fill="#64748b" font-size="13" font-family="Segoe UI, Arial, sans-serif">Method: public commit search by Dress contributors&#x27; GitHub logins, then exclude mirror-like projects and manually blacklisted noise repositories.</text>
 </svg>
